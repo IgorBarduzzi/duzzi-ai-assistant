@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duzzi Workspace</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-idle">
+
+    <div class="dynamic-bg" id="dynamic-bg"></div>
+
+    <div class="workspace-layout">
+        
+        <!-- SIDEBAR: Histórico de Sessões -->
+        <div class="sidebar">
+            <button id="btn-new-topic" class="btn-primary">
+                <span class="icon">+</span> Novo tópico
+            </button>
+            <div class="sidebar-header">
+                <h3>CONVERSAS</h3>
+            </div>
+            <div id="sessions-list" class="sessions-list">
+                <!-- Session cards will be injected here -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span id="connection-status" class="dot disconnected"></span>
+                    <span id="connection-text">Desconectado</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CHAT: Área central -->
+        <div class="main-chat">
+            <div class="chat-header">
+                <h1 id="state-title">Aguardando</h1>
+                <p id="state-subtitle">Duzzi está inativo.</p>
+                <div class="orb-mini" id="orb-mini"></div>
+            </div>
+            
+            <div id="chat-history" class="chat-history">
+                <!-- Chat messages go here -->
+            </div>
+
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <!-- Botão PTT (Push-to-Talk) -->
+                    <button id="mic-btn" class="icon-btn" title="Falar com Duzzi (Push-to-Talk)">
+                        🎙️
+                    </button>
+                    <input type="text" id="command-input" placeholder="Pergunte ao Duzzi ou digite um comando..." autocomplete="off">
+                    <button id="send-btn" class="icon-btn action-btn">⮞</button>
+                </div>
+                <div class="input-footer">
+                    Model: <span class="model-badge">qwen3:8b (Local)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- WORKBENCH: Painel Direito -->
+        <div class="workbench glass-panel">
+            <nav class="tabs-nav">
+                <button class="tab-btn active" data-tab="tab-preview">Preview</button>
+                <button class="tab-btn" data-tab="tab-code">Código</button>
+                <button class="tab-btn" data-tab="tab-playing">Tocando</button>
+                <button class="tab-btn" data-tab="tab-tools">Ferramentas</button>
+            </nav>
+
+            <div class="tab-content">
+                
+                <!-- TAB: Preview -->
+                <div id="tab-preview" class="tab-pane active">
+                    <div class="preview-container">
+                        <iframe id="preview-iframe" title="Web Preview" sandbox="allow-scripts allow-same-origin"></iframe>
+                        <div id="preview-placeholder" class="placeholder-text">
+                            Nenhum elemento visual gerado na conversa atual.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: Código -->
+                <div id="tab-code" class="tab-pane hidden">
+                    <div id="code-history">
+                        <div class="placeholder-text">O código gerado aparecerá aqui.</div>
+                    </div>
+                </div>
+
+                <!-- TAB: Tocando (Spotify) -->
+                <div id="tab-playing" class="tab-pane hidden">
+                    <div class="spotify-card">
+                        <img id="album-cover" src="" alt="Album Cover" style="display:none;">
+                        <div class="placeholder-art" id="album-cover-placeholder">♪</div>
+                        <h2 id="track-title">Nenhuma música</h2>
+                        <h3 id="track-artist">Esperando o Spotify...</h3>
+                        
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="track-progress" style="width: 0%;"></div>
+                        </div>
+
+                        <div class="playback-controls">
+                            <button id="sp-prev">⏮</button>
+                            <button id="sp-pause">⏯</button>
+                            <button id="sp-next">⏭</button>
+                        </div>
+                        <div class="volume-control">
+                            <span class="volume-icon">🔉</span>
+                            <input type="range" id="sp-volume" min="0" max="100" value="50">
+                            <span class="volume-icon">🔊</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: Ferramentas (Mural + Perfil) -->
+                <div id="tab-tools" class="tab-pane hidden">
+                    <div class="tools-section">
+                        <h2>Identidade do Usuário</h2>
+                        <div class="form-group"><input type="text" id="prof-nome" placeholder="Seu nome"></div>
+                        <div class="form-group"><input type="text" id="prof-cidade" placeholder="Sua cidade"></div>
+                        <div class="form-group"><input type="text" id="prof-profissao" placeholder="Profissão"></div>
+                        <div class="form-group"><textarea id="prof-rotina" rows="2" placeholder="Rotina e interesses..."></textarea></div>
+                        <div class="form-group">
+                            <select id="prof-estilo">
+                                <option value="amigável">Amigável e Conciso</option>
+                                <option value="frio e analítico">Analítico e Frio</option>
+                            </select>
+                        </div>
+                        <button id="save-profile-btn" class="btn-primary" style="width: 100%">Salvar Perfil</button>
+                    </div>
+
+                    <div class="tools-section" style="margin-top: 2rem;">
+                        <h2>Mural de Anotações</h2>
+                        <div id="mural-grid" class="mural-grid"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,435 @@
+:root {
+  /* Globals - DreamServer IDE Theme */
+  --bg-dark: #090B10;
+  --bg-sidebar: #05060A;
+  --bg-panel: #11141D;
+  --bg-input: #181C27;
+  
+  --text-main: #E2E8F0;
+  --text-muted: #64748B;
+  --accent-color: #6366F1;
+  --accent-hover: #4F46E5;
+  --border-color: #1E2333;
+
+  /* Thematic Orb Colors */
+  --orb-gold: #fbbf24;
+  --orb-blue: #3b82f6;
+  --orb-purple: #a855f7;
+  --orb-green: #10b981;
+  --orb-current: var(--orb-gold);
+  
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+  
+  --bg-album: url('');
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.dynamic-bg {
+  position: fixed;
+  top: -10%; left: -10%; 
+  width: 120%; height: 120%;
+  z-index: -1;
+  background-image: var(--bg-album);
+  background-size: cover;
+  background-position: center;
+  filter: blur(100px) brightness(0.15);
+  transition: background-image 2s ease-in-out;
+}
+
+/* ========================================= */
+/* WORKSPACE LAYOUT (3 Panes)                */
+/* ========================================= */
+.workspace-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr 500px;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ========================================= */
+/* 1. SIDEBAR (History)                      */
+/* ========================================= */
+.sidebar {
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.btn-primary {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.sidebar-header h3 {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.sessions-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sessions-list::-webkit-scrollbar { width: 4px; }
+.sessions-list::-webkit-scrollbar-thumb { background: var(--border-color); }
+
+.session-card {
+  padding: 12px;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.session-card:hover {
+  background: var(--bg-panel);
+}
+
+.session-card.active {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+}
+
+.session-card h4 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.session-card p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.sidebar-footer {
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: red; }
+.dot.connected { background: var(--orb-green); }
+
+/* ========================================= */
+/* 2. MAIN CHAT AREA                         */
+/* ========================================= */
+.main-chat {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  position: relative;
+}
+
+.chat-header {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(9, 11, 16, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.chat-header h1 {
+  font-size: 1.2rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.chat-header p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.orb-mini {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff, var(--orb-current));
+  box-shadow: 0 0 15px var(--orb-current);
+  margin-top: 10px;
+  transition: all 0.5s ease;
+}
+
+/* Chat History */
+.chat-history {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.chat-history::-webkit-scrollbar { width: 6px; }
+.chat-history::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+
+.chat-bubble {
+  max-width: 85%;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.chat-user {
+  align-self: flex-end;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-bottom-right-radius: 4px;
+}
+
+.chat-duzzi {
+  align-self: flex-start;
+  background-color: transparent;
+  border-left: 3px solid var(--accent-color);
+  border-radius: 4px;
+  padding-left: 1.5rem;
+}
+
+/* Input Area */
+.input-container {
+  padding: 1.5rem;
+  background: rgba(9, 11, 16, 0.8);
+  border-top: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+}
+
+.input-wrapper {
+  display: flex;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px;
+  gap: 8px;
+  align-items: center;
+}
+
+#command-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  outline: none;
+  padding: 8px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  font-size: 1.1rem;
+}
+
+.icon-btn:hover {
+  background: rgba(255,255,255,0.05);
+  color: var(--text-main);
+}
+
+.icon-btn.recording {
+  color: #ef4444;
+  animation: pulse 1s infinite;
+}
+
+.input-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+.model-badge {
+  font-size: 0.7rem;
+  background: rgba(99, 102, 241, 0.2);
+  color: var(--accent-color);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+}
+
+/* ========================================= */
+/* 3. WORKBENCH (Right Panel)                */
+/* ========================================= */
+.workbench {
+  background-color: var(--bg-panel);
+  border-left: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs-nav {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(0,0,0,0.2);
+}
+
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 12px 0;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  color: var(--text-main);
+  border-bottom: 2px solid var(--accent-color);
+  background: rgba(255,255,255,0.02);
+}
+
+.tab-content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.tab-pane {
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* Tab: Preview */
+.preview-container {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-dark); /* Deixa escuro inicialmente */
+  position: relative;
+}
+
+#preview-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent; /* Deixa transparente pra ver o fundo se estiver vazio */
+}
+
+/* Quando injetarmos o conteudo branco pelo JS, o iframe vai ficar branco */
+
+.placeholder-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: #999;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Tab: Código */
+#code-history {
+  padding: 1rem;
+  height: 100%;
+  background: var(--bg-dark);
+}
+#code-history pre {
+  margin: 0;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-input);
+}
+#code-history code {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+/* Outras Abas */
+.tools-section {
+  padding: 1.5rem;
+}
+.tools-section h2 { font-size: 1rem; margin-bottom: 1rem; }
+
+.form-group { margin-bottom: 1rem; }
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 10px;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+}
+
+.spotify-card {
+  padding: 2rem;
+  text-align: center;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.hidden { display: none !important; }

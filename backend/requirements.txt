@@ -1,0 +1,9 @@
+websockets
+spotipy
+edge-tts
+faster-whisper
+sounddevice
+soundfile
+openwakeword
+requests
+numpy

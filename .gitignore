@@ -1,0 +1,38 @@
+# Media & Demonstration (Excluded as requested)
+Video twitter.mp4
+*.mp4
+*.wav
+*.mp3
+
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+
+# Python cache & bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Credentials & Tokens
+.env
+.spotify_token
+backend/.spotify_token
+*.key
+*.pem
+
+# Temporary files
+backend/temp_command.wav
+temp_command.wav
+*.tmp
+*.log
+
+# IDE & OS
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+.DS_Store
