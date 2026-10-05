@@ -62,7 +62,7 @@ graph TD
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/IrguCap/duzzi-ai-assistant.git
+   git clone https://github.com/IgorBarduzzi/duzzi-ai-assistant.git
    cd duzzi-ai-assistant
    ```
 
