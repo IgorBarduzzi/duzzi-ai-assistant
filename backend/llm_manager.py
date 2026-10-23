@@ -6,8 +6,9 @@ from datetime import datetime
 
 class LLMManager:
     def __init__(self):
-        self.OLLAMA_URL = "http://localhost:11434/api/chat"
-        self.MODEL = "qwen3:8b"
+        ollama_host = os.getenv("OLLAMA_HOST", "http://localhost:11434").rstrip("/")
+        self.OLLAMA_URL = f"{ollama_host}/api/chat"
+        self.MODEL = os.getenv("OLLAMA_MODEL", "llama3:latest")
         self.history_file = os.path.join(os.path.expanduser("~"), "duzzi_history.json")
         self.profile_file = os.path.join(os.path.expanduser("~"), "duzzi_profile.json")
         self.profile = self.load_profile()
