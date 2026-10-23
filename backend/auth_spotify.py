@@ -2,9 +2,7 @@ import os
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
-# Você DEVE obter essas credenciais no painel "Spotify for Developers"
-# Vá em https://developer.spotify.com/dashboard
-# Crie um app, e adicione nas configurações o "Redirect URI": http://127.0.0.1:8888/callback
+# Autenticação local OAuth para Spotify API
 
 CLIENT_ID = os.getenv("SPOTIPY_CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("SPOTIPY_CLIENT_SECRET", "")
@@ -24,7 +22,7 @@ def auth():
                             scope=SCOPES,
                             cache_path=cache_path)
     
-    # Isso vai forçar que abra o navegador e salve o token
+    # Abre o navegador para autorização do usuário e armazena o token em cache
     token_info = sp_oauth.get_access_token(as_dict=False)
     
     if token_info:

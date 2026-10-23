@@ -4,7 +4,6 @@ import json
 import threading
 import sys
 
-# Importa os módulos auxiliares
 from spotify_manager import SpotifyManager
 from audio_manager import AudioManager
 from llm_manager import LLMManager
@@ -19,7 +18,6 @@ class DuzziAssistant:
         self.state = "idle" # idle, listening, processing, speaking
         self.clients = set()
         
-        # Inicializa modulos
         self.llm = LLMManager()
         self.skills = SkillsManager()
         self.spotify = SpotifyManager(self.SPOTIPY_CLIENT_ID, self.SPOTIPY_CLIENT_SECRET)

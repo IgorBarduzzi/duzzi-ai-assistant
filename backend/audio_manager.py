@@ -83,7 +83,7 @@ class AudioManager:
                         buffer_audio = []
                         silence_start_time = None
                 else:
-                    # Fallback Gracioso sem wakeword, assume RMS alto contínuo como inicio.
+                    # Ativação por limiar de energia (RMS) caso wake word esteja desabilitada.
                     rms = np.sqrt(np.mean(audio_chunk**2))
                     if rms > self.SILENCE_RMS_THRESHOLD:
                         self.callback_wakeword()
